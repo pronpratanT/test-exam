@@ -23,4 +23,9 @@ func SetupRoutes(r *gin.RouterGroup, h *Handler) {
 	// middleware.JWTAuthMiddleware(),
 	r.POST("/test2/signup", h.Signup)
 	r.POST("/test2/signin", h.Signin)
+	//test 3
+	r.GET("/test3/get-all", h.GetAllDataTest3)
+	r.GET("/test3/get/:id", h.GetDetailByIDTest3)
+	r.POST("/test3/approve/:id", h.ApproveDataTest3)
+	r.POST("/test3/reject/:id", h.RejectDataTest3)
 }
