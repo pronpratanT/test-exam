@@ -1,9 +1,12 @@
 package repository
 
-import "test-backend/internal/project/dto"
+import (
+	"test-backend/internal/project/dto"
+	"test-backend/shared/models"
+)
 
-func (r *TestRepository) Test4SaveData(data dto.Test4DTO) error {
-	data = dto.Test4DTO{
+func (r *TestRepository) Test4SaveData(data dto.Test4DTO) (int, error) {
+	record := models.Test4{
 		FName:      data.FName,
 		LName:      data.LName,
 		Email:      data.Email,
@@ -12,7 +15,10 @@ func (r *TestRepository) Test4SaveData(data dto.Test4DTO) error {
 		Birthdate:  data.Birthdate,
 		Occupation: data.Occupation,
 	}
-	return r.DB.Create(&data).Error
+	if err := r.DB.Create(&record).Error; err != nil {
+		return 0, err
+	}
+	return record.ID, nil
 }
 
 func (r *TestRepository) CheckDuplicateEmail(email string) (bool, error) {

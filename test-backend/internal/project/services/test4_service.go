@@ -5,13 +5,13 @@ import (
 	"test-backend/internal/project/dto"
 )
 
-func (s *TestService) Test4SaveData(data dto.Test4DTO) error {
+func (s *TestService) Test4SaveData(data dto.Test4DTO) (int, error) {
 	duplicate, err := s.AppRepo.CheckDuplicateEmail(data.Email)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	if duplicate {
-		return fmt.Errorf("email already exists")
+		return 0, fmt.Errorf("email already exists")
 	}
 	return s.AppRepo.Test4SaveData(data)
 }

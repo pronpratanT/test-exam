@@ -10,30 +10,32 @@ import (
 )
 
 func (h *Handler) Test4SaveData(c *gin.Context) {
-	var dto dto.Test4DTO
+	var inputDTO dto.Test4DTO
 
-	dto.FName = c.PostForm("fname")
-	dto.LName = c.PostForm("lname")
-	dto.Email = c.PostForm("email")
-	dto.Phone = c.PostForm("phone")
-	dto.Birthdate = c.PostForm("birthdate")
-	dto.Occupation = c.PostForm("occupation")
+	inputDTO.FName = c.PostForm("fname")
+	inputDTO.LName = c.PostForm("lname")
+	inputDTO.Email = c.PostForm("email")
+	inputDTO.Phone = c.PostForm("phone")
+	inputDTO.Birthdate = c.PostForm("birthdate")
+	inputDTO.Occupation = c.PostForm("occupation")
 
 	file, err := c.FormFile("profile")
 	if err == nil {
 		f, _ := file.Open()
 		defer f.Close()
 		buf, _ := io.ReadAll(f)
-		dto.Profile = base64.StdEncoding.EncodeToString(buf)
+		inputDTO.Profile = base64.StdEncoding.EncodeToString(buf)
 	}
 
-	if err := h.Service.Test4SaveData(dto); err != nil {
+	id, err := h.Service.Test4SaveData(inputDTO)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to save data",
+			"error": err.Error(),
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Data saved successfully",
+		"id":      id,
 	})
 }
