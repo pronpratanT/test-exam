@@ -19,4 +19,8 @@ func SetupRoutes(r *gin.RouterGroup, h *Handler) {
 	r.GET("/test1/get-all", h.GetAllData)
 	r.POST("/test1/create", h.CreateData)
 	r.GET("/test1/get/:id", h.GetDetailByID)
+	//test 2
+	// middleware.JWTAuthMiddleware(),
+	r.POST("/test2/signup", h.Signup)
+	r.POST("/test2/signin", h.Signin)
 }
