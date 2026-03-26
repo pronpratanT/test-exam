@@ -23,3 +23,13 @@ type SigninResponse struct {
 	Username string `json:"username"`
 	Token    string `json:"token"`
 }
+
+type Test4DTO struct {
+	FName      string `json:"fname"`
+	LName      string `json:"lname"`
+	Email      string `json:"email"`
+	Phone      string `json:"phone"`
+	Profile    string `json:"profile"`
+	Birthdate  string `json:"birthdate"`
+	Occupation string `json:"occupation"`
+}
