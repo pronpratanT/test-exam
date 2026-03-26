@@ -7,6 +7,7 @@ import (
 	"test-backend/internal/project/services"
 	"test-backend/shared/config"
 	db "test-backend/shared/connection"
+	"test-backend/shared/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,6 +21,7 @@ func main() {
 	testHandler := handlers.NewHandler(testService)
 
 	r := gin.Default()
+	r.Use(middleware.CORSMiddleware()) // ใส่แค่นี้พอ
 	router.SetupRouter(r, testHandler)
 
 	r.Run(":7070")
