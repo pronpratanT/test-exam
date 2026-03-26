@@ -30,4 +30,7 @@ func SetupRoutes(r *gin.RouterGroup, h *Handler) {
 	r.POST("/test3/reject/:id", h.RejectDataTest3)
 	//test 4
 	r.POST("/test4/save", h.Test4SaveData)
+	//test 5
+	r.POST("/test5/create-ticket", h.CreateTicket)
+	r.POST("/test5/clear-ticket/:queNumber", h.ClearTicket)
 }
