@@ -15,5 +15,8 @@ func NewHandler(service *services.TestService) *Handler {
 }
 
 func SetupRoutes(r *gin.RouterGroup, h *Handler) {
-	// r.GET("/test", h.TestHandler)
+	//test 1
+	r.GET("/test1/get-all", h.GetAllData)
+	r.POST("/test1/create", h.CreateData)
+	r.GET("/test1/get/:id", h.GetDetailByID)
 }
