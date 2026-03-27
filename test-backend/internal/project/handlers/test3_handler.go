@@ -44,20 +44,14 @@ func (h *Handler) GetDetailByIDTest3(c *gin.Context) {
 }
 
 func (h *Handler) ApproveDataTest3(c *gin.Context) {
-	var dto dto.Test3ApproveDTO
+	var dto []dto.Test3ApproveDTO
 	if err := c.ShouldBindJSON(&dto); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Invalid request body",
 		})
 		return
 	}
-	if err := h.Service.ApproveDataTest3(dto.ID, dto.Reason); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to approve data",
-		})
-		return
-	}
-		if err := h.Service.ApproveDataTest3(id, reason); err != nil {
+	if err := h.Service.ApproveDataTest3(dto); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to approve data",
 		})
@@ -69,14 +63,14 @@ func (h *Handler) ApproveDataTest3(c *gin.Context) {
 }
 
 func (h *Handler) RejectDataTest3(c *gin.Context) {
-	var dto dto.Test3RejectDTO
+	var dto []dto.Test3RejectDTO
 	if err := c.ShouldBindJSON(&dto); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Invalid request body",
 		})
 		return
 	}
-	if err := h.Service.RejectDataTest3(dto.ID, dto.Reason); err != nil {
+	if err := h.Service.RejectDataTest3(dto); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to reject data",
 		})

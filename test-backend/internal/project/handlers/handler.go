@@ -26,8 +26,8 @@ func SetupRoutes(r *gin.RouterGroup, h *Handler) {
 	//test 3
 	r.GET("/test3/get-all", h.GetAllDataTest3)
 	r.GET("/test3/get/:id", h.GetDetailByIDTest3)
-	r.POST("/test3/approve/:id", h.ApproveDataTest3)
-	r.POST("/test3/reject/:id", h.RejectDataTest3)
+	r.POST("/test3/approve", h.ApproveDataTest3)
+	r.POST("/test3/reject", h.RejectDataTest3)
 	r.POST("/test3/create", h.CreateDataTest3)
 	//test 4
 	r.POST("/test4/save", h.Test4SaveData)

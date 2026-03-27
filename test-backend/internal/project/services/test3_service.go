@@ -13,12 +13,12 @@ func (s *TestService) GetDetailByIDTest3(id int) (*models.Test3, error) {
 	return s.AppRepo.GetDetailByIDTest3(id)
 }
 
-func (s *TestService) ApproveDataTest3(id int, reason string) error {
-	return s.AppRepo.ApproveDataTest3(id, reason)
+func (s *TestService) ApproveDataTest3(dto []dto.Test3ApproveDTO) error {
+	return s.AppRepo.ApproveDataTest3(dto)
 }
 
-func (s *TestService) RejectDataTest3(id int, reason string) error {
-	return s.AppRepo.RejectDataTest3(id, reason)
+func (s *TestService) RejectDataTest3(dto []dto.Test3RejectDTO) error {
+	return s.AppRepo.RejectDataTest3(dto)
 }
 
 func (s *TestService) CreateDataTest3(data *dto.Test3DTO) error {

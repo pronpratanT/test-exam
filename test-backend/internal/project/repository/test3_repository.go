@@ -7,7 +7,7 @@ import (
 
 func (r *TestRepository) GetAllDataTest3() ([]models.Test3, error) {
 	var data []models.Test3
-	err := r.DB.Find(&data).Error
+	err := r.DB.Order("id ASC").Find(&data).Error
 	return data, err
 }
 
@@ -20,12 +20,22 @@ func (r *TestRepository) GetDetailByIDTest3(id int) (*models.Test3, error) {
 	return &data, nil
 }
 
-func (r *TestRepository) ApproveDataTest3(id int, reason string) error {
-	return r.DB.Model(&models.Test3{}).Where("id = ?", id).Update("status", "approved").Update("reason", reason).Error
+func (r *TestRepository) ApproveDataTest3(dto []dto.Test3ApproveDTO) error {
+	for _, item := range dto {
+		if err := r.DB.Model(&models.Test3{}).Where("id = ?", item.ID).Update("status", "approved").Update("reason", item.Reason).Error; err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
-func (r *TestRepository) RejectDataTest3(id int, reason string) error {
-	return r.DB.Model(&models.Test3{}).Where("id = ?", id).Update("status", "rejected").Update("reason", reason).Error
+func (r *TestRepository) RejectDataTest3(dto []dto.Test3RejectDTO) error {
+	for _, item := range dto {
+		if err := r.DB.Model(&models.Test3{}).Where("id = ?", item.ID).Update("status", "rejected").Update("reason", item.Reason).Error; err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (r *TestRepository) CreateDataTest3(data *dto.Test3DTO) error {
