@@ -20,12 +20,12 @@ func (r *TestRepository) GetDetailByIDTest3(id int) (*models.Test3, error) {
 	return &data, nil
 }
 
-func (r *TestRepository) ApproveDataTest3(id int) error {
-	return r.DB.Model(&models.Test3{}).Where("id = ?", id).Update("status", "approved").Error
+func (r *TestRepository) ApproveDataTest3(id int, reason string) error {
+	return r.DB.Model(&models.Test3{}).Where("id = ?", id).Update("status", "approved").Update("reason", reason).Error
 }
 
-func (r *TestRepository) RejectDataTest3(id int) error {
-	return r.DB.Model(&models.Test3{}).Where("id = ?", id).Update("status", "rejected").Error
+func (r *TestRepository) RejectDataTest3(id int, reason string) error {
+	return r.DB.Model(&models.Test3{}).Where("id = ?", id).Update("status", "rejected").Update("reason", reason).Error
 }
 
 func (r *TestRepository) CreateDataTest3(data *dto.Test3DTO) error {

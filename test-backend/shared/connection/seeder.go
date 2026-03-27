@@ -22,12 +22,12 @@ func SeedMockDataTest3(db *gorm.DB) {
 	if count == 0 {
 		// 3. ถ้าไม่มีข้อมูลเลย ให้เตรียม Mockup Data เป็น Array
 		mockData := []models.Test3{
-			{Name: "Somchai Jaidee", Reason: "เบิกค่าเดินทาง", Status: "pending"},
-			{Name: "Suda Yindee", Reason: "ลาป่วย", Status: "pending"},
-			{Name: "Mana Rakthai", Reason: "อุปกรณ์ IT เสียหาย", Status: "pending"},
-			{Name: "Anan Dee", Reason: "ลากิจ", Status: "pending"},
-			{Name: "Kanya Sukjai", Reason: "ค่าอาหารลูกค้า", Status: "pending"},
-			{Name: "Prasert Meechai", Reason: "ลาพักร้อน", Status: "pending"},
+			{Name: "mouse", Reason: "", Status: "pending"},
+			{Name: "keyboard", Reason: "", Status: "pending"},
+			{Name: "monitor", Reason: "", Status: "pending"},
+			{Name: "headphone", Reason: "", Status: "pending"},
+			{Name: "webcam", Reason: "", Status: "pending"},
+			{Name: "printer", Reason: "", Status: "pending"},
 		}
 
 		// 4. สั่ง Insert ทีเดียวทั้งหมดเข้าไปที่ Database

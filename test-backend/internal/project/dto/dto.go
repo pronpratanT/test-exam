@@ -25,6 +25,16 @@ type Test3DTO struct {
 	Status string `json:"status"`
 }
 
+type Test3ApproveDTO struct {
+	ID     int    `json:"id"`
+	Reason string `json:"reason"`
+}
+
+type Test3RejectDTO struct {
+	ID     int    `json:"id"`
+	Reason string `json:"reason"`
+}
+
 type SigninResponse struct {
 	Username string `json:"username"`
 	Token    string `json:"token"`
