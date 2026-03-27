@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"test-backend/internal/project/dto"
 	"github.com/gin-gonic/gin"
 )
 
@@ -81,5 +82,24 @@ func (h *Handler) RejectDataTest3(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Data rejected successfully",
+	})
+}	
+
+func (h *Handler) CreateDataTest3(c *gin.Context) {
+	var req dto.Test3DTO
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid request body",
+		})
+		return
+	}
+	if err := h.Service.CreateDataTest3(&req); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to create data",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Data created successfully",
 	})
 }

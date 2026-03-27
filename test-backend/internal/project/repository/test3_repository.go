@@ -1,6 +1,9 @@
 package repository
 
-import "test-backend/shared/models"
+import (
+	"test-backend/internal/project/dto"
+	"test-backend/shared/models"
+)
 
 func (r *TestRepository) GetAllDataTest3() ([]models.Test3, error) {
 	var data []models.Test3
@@ -23,4 +26,13 @@ func (r *TestRepository) ApproveDataTest3(id int) error {
 
 func (r *TestRepository) RejectDataTest3(id int) error {
 	return r.DB.Model(&models.Test3{}).Where("id = ?", id).Update("status", "rejected").Error
+}
+
+func (r *TestRepository) CreateDataTest3(data *dto.Test3DTO) error {
+	newModel := models.Test3{
+		Name:   data.Name,
+		Reason: data.Reason,
+		Status: data.Status,
+	}
+	return r.DB.Create(&newModel).Error
 }

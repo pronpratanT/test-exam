@@ -1,5 +1,5 @@
 <template lang="html">
-    <div>
+    <div class="flex justify-center items-center h-screen">
         <h2>Welcome User : {{ username }}</h2>
     </div>
 </template>

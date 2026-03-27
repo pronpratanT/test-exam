@@ -53,13 +53,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in products" :key="product.code" class="hover:bg-gray-50">
+        <tr v-for="product in products" :key="product.id" class="hover:bg-gray-50">
           <td class="px-4 py-2 border-b text-center">
-            <input type="checkbox" :value="product.code" />
+            <input type="checkbox" :value="product.id" />
           </td>
           <td class="px-4 py-2 border-b">{{ product.name }}</td>
-          <td class="px-4 py-2 border-b">{{ product.category }}</td>
-          <td class="px-4 py-2 border-b">01/01/2000</td>
+          <td class="px-4 py-2 border-b">{{ product.reason }}</td>
+          <td class="px-4 py-2 border-b">{{ product.status }}</td>
         </tr>
       </tbody>
     </table>
@@ -68,19 +68,30 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Test3Page',
   data() {
     return {
       Approve: false,
       Reject: false,
-      products: [
-        { code: 'P001', name: 'Product 1', category: 'Category 1', },
-        { code: 'P002', name: 'Product 2', category: 'Category 2', },
-        { code: 'P003', name: 'Product 3', category: 'Category 3', },
-        { code: 'P004', name: 'Product 4', category: 'Category 4', }
-      ]
+      products: []
     }
   },
+  mounted() {
+    this.getDataAllTest3()
+  },
+  methods: {
+    async getDataAllTest3() {
+      try {
+        const response = await axios.get('/api/test/test3/get-all');
+        this.products = response.data.data;
+        // console.log(this.products)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+  }
 }
 </script>

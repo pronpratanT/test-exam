@@ -16,6 +16,9 @@ func main() {
 	config.LoadConfig()
 	appDB := db.ConntectDB()
 
+	// เรียกคำสั่งเช็คและยัด Mockup Data ทันทีที่เชื่อมต่อ DB สำเร็จ (ในตอนเริ่มโปรเจกต์)
+	db.SeedMockDataTest3(appDB)
+
 	testRepo := repository.NewTestExamRepository(appDB)
 	testService := services.NewTestService(testRepo)
 	testHandler := handlers.NewHandler(testService)

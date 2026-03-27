@@ -19,6 +19,12 @@ type Test2DTOSignin struct {
 	Password string `json:"password"`
 }
 
+type Test3DTO struct {	
+	Name   string `json:"name"`
+	Reason string `json:"reason"`
+	Status string `json:"status"`
+}
+
 type SigninResponse struct {
 	Username string `json:"username"`
 	Token    string `json:"token"`
