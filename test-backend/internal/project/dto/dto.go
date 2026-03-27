@@ -1,5 +1,7 @@
 package dto
 
+import "time"
+
 type Test1DTO struct {
 	FName     string `json:"fname"`
 	LName     string `json:"lname"`
@@ -41,11 +43,12 @@ type SigninResponse struct {
 }
 
 type Test4DTO struct {
-	FName      string `json:"fname"`
-	LName      string `json:"lname"`
-	Email      string `json:"email"`
-	Phone      string `json:"phone"`
-	Profile    string `json:"profile"`
-	Birthdate  string `json:"birthdate"`
-	Occupation string `json:"occupation"`
+	FName      string    `form:"fname" json:"fname"`
+	LName      string    `form:"lname" json:"lname"`
+	Email      string    `form:"email" json:"email"`
+	Phone      string    `form:"phone" json:"phone"`
+	Profile    string    `form:"-" json:"profile"`
+	Birthdate  time.Time `form:"birthdate" time_format:"2006-01-02" json:"birthdate"`
+	Occupation string    `form:"occupation" json:"occupation"`
+	Sex        string    `form:"sex" json:"sex"`
 }

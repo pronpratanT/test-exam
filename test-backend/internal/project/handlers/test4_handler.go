@@ -12,12 +12,12 @@ import (
 func (h *Handler) Test4SaveData(c *gin.Context) {
 	var inputDTO dto.Test4DTO
 
-	inputDTO.FName = c.PostForm("fname")
-	inputDTO.LName = c.PostForm("lname")
-	inputDTO.Email = c.PostForm("email")
-	inputDTO.Phone = c.PostForm("phone")
-	inputDTO.Birthdate = c.PostForm("birthdate")
-	inputDTO.Occupation = c.PostForm("occupation")
+	if err := c.ShouldBind(&inputDTO); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid Form Data: " + err.Error(),
+		})
+		return
+	}
 
 	file, err := c.FormFile("profile")
 	if err == nil {

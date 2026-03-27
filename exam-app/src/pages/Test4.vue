@@ -9,7 +9,7 @@
           toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
         ]"
       >
-        {{ toast.message }}
+        save data success ID : {{ toast.id }}
       </div>
     </div>
   <div>
@@ -28,29 +28,29 @@
       <div class="flex flex-wrap gap-6 mb-4 justify-center">
         <div class="flex-1 min-w-[200px] max-w-md">
           <label class="block mb-1 font-medium text-left" for="email">Email</label>
-          <input type="text" id="email" class="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input type="text" id="email" v-model="email" class="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div class="flex-1 min-w-[200px] max-w-md">
           <label class="block mb-1 font-medium text-left" for="phone">Phone</label>
-          <input type="text" id="phone" class="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input type="text" id="phone" v-model="phone" class="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
       </div>
 
       <div class="flex flex-wrap gap-6 mb-4 justify-center">
         <div class="flex-1 min-w-[200px] max-w-md">
           <label class="block mb-1 font-medium text-left" for="profile">Profile</label>
-          <input type="file" id="profile" class="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input type="file" id="profile" ref="profileInput" @change="handleFileUpload" class="border border-gray-300 rounded px-3 py-2 w-full" accept="image/*,.pdf" />
         </div>
         <div class="flex-1 min-w-[200px] max-w-md">
           <label class="block mb-1 font-medium text-left" for="birthDay">Birth Day</label>
-          <input type="date" id="birthDay" class="border border-gray-300 rounded px-3 py-2 w-full" />
+          <input type="date" id="birthDay" v-model="birthDay" class="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
       </div>
 
       <div class="flex flex-wrap gap-6 mb-4 justify-center">
         <div class="flex-1 min-w-[200px] max-w-md">
           <label class="block mb-1 font-medium text-left" for="occupation">Occupation</label>
-          <select id="occupation" class="border border-gray-300 rounded px-3 py-2 w-full">
+          <select id="occupation" v-model="occupation" class="border border-gray-300 rounded px-3 py-2 w-full">
             <option value="">Select Occupation</option>
             <option value="developer">Developer</option>
             <option value="designer">Designer</option>
@@ -65,11 +65,11 @@
           <label class="block mb-1 font-medium text-left" for="sex">Sex</label>
           <div class="flex items-center gap-6 pl-2">
             <label class="inline-flex items-center">
-              <input type="radio" name="sex" value="male" class="border border-gray-300" />
+              <input type="radio" name="sex" value="male" v-model="sex" class="border border-gray-300" />
               <span class="ml-2">Male</span>
             </label>
             <label class="inline-flex items-center">
-              <input type="radio" name="sex" value="female" class="border border-gray-300" />
+              <input type="radio" name="sex" value="female" v-model="sex" class="border border-gray-300" />
               <span class="ml-2">Female</span>
             </label>
           </div>
@@ -87,6 +87,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Test4Page',
   data() {
@@ -94,25 +96,75 @@ export default {
       error: '',
       toasts: [],
       firstName: '',
-      lastName: ''
+      lastName: '',
+      email: '',
+      phone: '',
+      profileFile: null,
+      birthDay: '',
+      occupation: '',
+      sex: ''
     }
   },
   methods: {
-    handleSave() {
-      // ตัวอย่างการตรวจสอบข้อมูลแบบง่าย
-      if (!this.firstName || !this.lastName) {
-        this.error = 'กรุณากรอกข้อมูลให้ครบถ้วน';
+    handleFileUpload(event) {
+      if (event.target.files.length > 0) {
+        this.profileFile = event.target.files[0];
       } else {
-        this.showToast('Save Success!', 'success');
-        this.error = '';
+        this.profileFile = null;
       }
     },
-    showToast(message, type = 'success') {
-      const id = Date.now() + Math.random();
-      this.toasts.push({ id, message, type });
+    async handleSave() {
+      // ตรวจสอบว่ามีช่องไหนเว้นว่างไว้หรือเปล่า (ถ้าเป็นค่าว่าง จะมีปัญหาเวลาส่งวันที่เข้าฐานข้อมูล)
+      if (!this.firstName || !this.lastName || !this.email || !this.phone || !this.birthDay || !this.occupation || !this.sex) {
+        this.error = 'กรุณาตรวจสอบและกรอกข้อมูลให้ครบถ้วนทุกช่องครับ';
+        return;
+      }
+      this.error = '';
+
+      const formData = new FormData();
+      formData.append('fname', this.firstName);
+      formData.append('lname', this.lastName);
+      formData.append('email', this.email);
+      formData.append('phone', this.phone);
+      formData.append('birthdate', this.birthDay);
+      formData.append('occupation', this.occupation);
+      formData.append('sex', this.sex);
+      
+      if (this.profileFile) {
+        formData.append('profile', this.profileFile); // แนบไฟล์ต้นฉบับไปเลย
+      }
+      console.log(formData)
+      try {
+        const response = await axios.post('/api/test/test4/save', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        const data = response.data;
+        this.handleClear();
+        this.error = '';
+        this.showToast(data.id, 'success');
+      } catch (error) {
+        console.error(error);
+        this.showToast('บันทึกข้อมูลไม่สำเร็จ', 'error');
+      }
+    },
+    showToast(id, type = 'success') {
+      this.toasts.push({id, type});
       setTimeout(() => {
         this.toasts = this.toasts.filter(t => t.id !== id);
       }, 3000);
+    },
+    handleClear() {
+      this.firstName = '';
+      this.lastName = '';
+      this.email = '';
+      this.phone = '';
+      this.profileFile = null;
+      this.birthDay = '';
+      this.occupation = '';
+      this.sex = '';
+      if (this.$refs.profileInput) {
+        this.$refs.profileInput.value = '';
+      }
     }
   }
 }
