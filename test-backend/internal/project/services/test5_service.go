@@ -16,12 +16,12 @@ func (s *TestService) CreateTicket() (*models.Test5, error) {
 	var nextQue string
 
 	if len(tickets) == 0 {
-		nextQue = "a0"
+		nextQue = "A0"
 	} else {
 		last := tickets[len(tickets)-1]
 
 		if last.Iscleared {
-			nextQue = "a0"
+			nextQue = "A0"
 		} else {
 			nextQue, err = generateNextQue(last.QueNumber)
 			if err != nil {
@@ -38,18 +38,18 @@ func generateNextQue(current string) (string, error) {
 		return "", fmt.Errorf("invalid que number format: %s", current)
 	}
 
-	letter := current[0] // เช่น 'a'
-	digit := current[1]  // เช่น '0'
+	letter := current[0]
+	digit := current[1]
 
 	if digit < '9' {
-		// a0 → a1, a1 → a2, ...
+		// A0 → A1, A1 → A2, ...
 		return string([]byte{letter, digit + 1}), nil
-	} else if letter < 'z' {
-		// a9 → b0, b9 → c0, ...
+	} else if letter < 'Z' {
+		// A9 → B0, B9 → C0, ...
 		return string([]byte{letter + 1, '0'}), nil
 	}
 
-	return "", fmt.Errorf("queue is full: reached z9")
+	return "", fmt.Errorf("queue is full: reached Z9")
 }
 
 func (s *TestService) ClearTicket(queNumber string) error {

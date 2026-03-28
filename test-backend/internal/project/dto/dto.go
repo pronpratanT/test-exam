@@ -52,3 +52,9 @@ type Test4DTO struct {
 	Occupation string    `form:"occupation" json:"occupation"`
 	Sex        string    `form:"sex" json:"sex"`
 }
+
+type Test5DTO struct {
+	QueNumber string `json:"que_number"`
+	CreatedAt string `json:"created_at"`
+	IsCleared bool   `json:"iscleared"`
+}

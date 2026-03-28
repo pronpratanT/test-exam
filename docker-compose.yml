@@ -32,5 +32,15 @@ services:
     depends_on:
       - postgres
 
+  frontend:
+    build: ./exam-app
+    container_name: exam-app
+    restart: always
+    ports:
+      - "8888:80"
+    depends_on:
+      - app
+
+
 volumes:
   postgres_data:

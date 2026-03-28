@@ -7,10 +7,11 @@ import Test3 from './pages/Test3.vue'
 import Test4 from './pages/Test4.vue'
 import Test5 from './pages/Test5.vue'
 import Test5_2 from './pages/Test5-2.vue'
+import Home from './pages/Home.vue'
 import App from './App.vue'
 
 const routes = [
-  { path: '/', component: App },
+  { path: '/', component: Home },
   { path: '/test1', component: Test1 },
   { path: '/test2', component: Test2 },
   { path: '/test2-2', component: Test2_2 },

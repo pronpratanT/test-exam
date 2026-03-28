@@ -5,9 +5,14 @@ import (
 )
 
 func (r *TestRepository) CreateTicket(queNumber string) (*models.Test5, error) {
+	isCleared := false
+	if queNumber == "Z9" {
+		isCleared = true
+	}
+
 	ticket := models.Test5{
 		QueNumber: queNumber,
-		Iscleared: false,
+		Iscleared: isCleared,
 	}
 	err := r.DB.Create(&ticket).Error
 	if err != nil {
