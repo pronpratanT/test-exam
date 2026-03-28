@@ -32,3 +32,16 @@ func (h *Handler) ClearTicket(c *gin.Context) {
 		"message": "Ticket cleared successfully",
 	})
 }
+
+func (h *Handler) GetLastTicket(c *gin.Context) {
+	ticket, err := h.Service.GetLastTicket()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to get last ticket: ",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"ticket": ticket,
+	})
+}

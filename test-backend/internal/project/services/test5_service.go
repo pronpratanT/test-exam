@@ -3,6 +3,8 @@ package services
 import (
 	"fmt"
 	"test-backend/shared/models"
+
+	"gorm.io/gorm"
 )
 
 func (s *TestService) CreateTicket() (*models.Test5, error) {
@@ -52,4 +54,19 @@ func generateNextQue(current string) (string, error) {
 
 func (s *TestService) ClearTicket(queNumber string) error {
 	return s.AppRepo.ClearAllTicket(queNumber)
+}
+
+func (s *TestService) GetLastTicket() (*models.Test5, error) {
+	last, err := s.AppRepo.GetLastTicket()
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return &models.Test5{QueNumber: "00"}, nil
+		}
+		return nil, err
+	}
+	if last.Iscleared == true {
+		last.QueNumber = "00"
+	}
+	return last, nil
+
 }

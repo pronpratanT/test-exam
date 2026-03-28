@@ -28,3 +28,12 @@ func (r *TestRepository) GetAllTicket() ([]models.Test5, error) {
 func (r *TestRepository) ClearAllTicket(queNumber string) error {
 	return r.DB.Model(&models.Test5{}).Where("que_number = ?", queNumber).Update("iscleared", true).Error
 }
+
+func (r *TestRepository) GetLastTicket() (*models.Test5, error) {
+	var ticket models.Test5
+	err := r.DB.Order("created_at desc").First(&ticket).Error
+	if err != nil {
+		return nil, err
+	}
+	return &ticket, nil
+}

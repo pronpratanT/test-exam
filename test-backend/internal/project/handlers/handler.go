@@ -34,4 +34,5 @@ func SetupRoutes(r *gin.RouterGroup, h *Handler) {
 	//test 5
 	r.POST("/test5/create-ticket", h.CreateTicket)
 	r.POST("/test5/clear-ticket/:queNumber", h.ClearTicket)
+	r.GET("/test5/get-last-ticket", h.GetLastTicket)
 }

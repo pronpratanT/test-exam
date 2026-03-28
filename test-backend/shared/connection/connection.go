@@ -11,7 +11,7 @@ import (
 
 var AppDB *gorm.DB
 
-func ConntectDB() *gorm.DB {
+func ConnectDB() *gorm.DB {
 	if AppDB != nil {
 		return AppDB
 	}
